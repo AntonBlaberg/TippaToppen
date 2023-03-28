@@ -26,7 +26,7 @@ class Playlist:
         self.href = data["href"]
         self.size = len(data["items"])
         #print (data)
-        print (jmespath.search('['track']', data))
+        print(jmespath.search('track', data))
         #for song in data["items"]:
             #print (song["track"]["name"])
             #print (jmespath.search(["track".["popularity", "name", "artists"[0]."name"]))
@@ -48,7 +48,7 @@ class Playlist:
 
 #get access for 1h then insert token from URL to variable below.
 #https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
-myToken = "BQBAEYiuyFOwKGFTEVHCdPt2NF0xJLB-iIV5k2AuM_1t3gFMf3O3Yaf_EUzh9nQQ5KdcjCoxKe1SuYoIdDYKUc2dM1Bzv2hyrrKjqZ-MkWEU08SMXToqxFP5EEomfZMWFeoHcVoWPXjPTSzG9Fc"
+myToken = "BQD8Dg1VbWRV4_YltL3EWKle9srv6cnOijLD_ew9RtO6edX4jfRPJkST60SsgeTK5js5BAnzevUJzV4kMwnhi2njsYQw77l3LZ-b-aqimPUoMdIqP0ju9sTZ__NB2e3vWRDmUwoN8ybrty5tQEZX3NHqVI8-NGZ5t-US5hqauYNLV1gID4U9"
 
 #trackID of Freelance - Tori (tror jag)
 freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
