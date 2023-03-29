@@ -23,10 +23,11 @@ class Track:
 
 class Playlist:
     def __init__(self, data):
+        self._data = data
         self.href = data["href"]
         self.size = len(data["items"])
         #print (data)
-        print(jmespath.search('track', data))
+        #print(jmespath.search('track', data))
         #for song in data["items"]:
             #print (song["track"]["name"])
             #print (jmespath.search(["track".["popularity", "name", "artists"[0]."name"]))
@@ -41,6 +42,11 @@ class Playlist:
     def getSize(abc):
         return abc.size
 
+    @property
+    def name(self):
+        print(self._data)
+        return self._data['name']
+
 
 
 
@@ -48,7 +54,7 @@ class Playlist:
 
 #get access for 1h then insert token from URL to variable below.
 #https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
-myToken = "BQD8Dg1VbWRV4_YltL3EWKle9srv6cnOijLD_ew9RtO6edX4jfRPJkST60SsgeTK5js5BAnzevUJzV4kMwnhi2njsYQw77l3LZ-b-aqimPUoMdIqP0ju9sTZ__NB2e3vWRDmUwoN8ybrty5tQEZX3NHqVI8-NGZ5t-US5hqauYNLV1gID4U9"
+myToken = "BQBJw5KiSF94UvEms6ASIDw0bXyu3Hztw4K3Izv0zG4mBM9X4cGQEuOfLA08cQ-XKRYWVGrN1ouKutpFURy7LO6o6UxI76Htgf4VYMEs-Wo5TOOGj7h_KRSX5TAVSbbhEytzYNXQ9DJkTFI5ttZ_gO4A0iC0NyYIou3jJP0I4JuGBwArltWN"
 
 #trackID of Freelance - Tori (tror jag)
 freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
@@ -64,7 +70,7 @@ def getTrack(trackID, token):
 #Get info about playlist
 def getPlaylist(playlistID, token):
     playlistURL = "https://api.spotify.com/v1/playlists/"+playlistID+"/tracks"
-    resp = requests.get(url = playlistURL, headers = {'Authorization': "Bearer "+token})
+    resp = requests.get(url = playlistURL, headers = {'Authorization': "Bearer "+token}, params={'limit': 15})
     return resp.json()
 
 
@@ -75,8 +81,19 @@ t1 = Track(getTrack(myTrackID, myToken))
 
 #trackID of "New Music Friday Sweden"
 newmusicplaylistID = "37i9dQZF1DXcecv7ESbOPu"
-p1 = Playlist(getPlaylist(newmusicplaylistID, myToken))
+top50worldID = "37i9dQZEVXbNG2KDcFcKOF"
 
+p1 = Playlist(getPlaylist(newmusicplaylistID, myToken))
+p1Data = p1._data
+for item in p1Data['items']:
+    # Retrieve the track name
+    track_name = item['track']['name']
+    # Retrieve the artist name
+    artist_name = item['track']['artists'][0]["name"]
+    # Retrieve the popularity of the track
+    popularity = item['track']['popularity']
+    # Print the track name and popularity
+    print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
 
 #FILTRERA MED JMESPath:
 #     "items"[*]."track".["popularity", "name", "artists"[0]."name"]
