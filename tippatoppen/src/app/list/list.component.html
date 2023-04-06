@@ -1,7 +1,12 @@
-<h1>Har du koll på Pop?</h1>
+<h1>TippaToppen - Vad är populärast?</h1>
 
 <!-- <button (click)="shuffle()">Shuffle Tracks</button> -->
 
-<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let track of trackArray" cdkDrag><strong>{{ track.title }}</strong> - {{track.artist}}</div>
-</div>
+<div cdkDropList (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let track of trackArray" cdkDrag>
+      <strong>{{ track.title }}</strong> by {{track.artist}}
+    </div>
+  </div>
+
+<button (click)="onButtonClick()">Submit</button>
+<h4 *ngIf="showScore"> Score: {{score}}</h4>

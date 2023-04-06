@@ -9,7 +9,9 @@ import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop'
   styleUrls: ['./list.component.css'],
 })
 export class ListComponent implements OnInit {
-
+  showScore: boolean = false
+  score: number = 0;
+  currentOrder: number[] = [];
   public trackArray: Track[] = []
   constructor(private http: HttpClient) {
     this.http
@@ -51,10 +53,28 @@ export class ListComponent implements OnInit {
     }
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.trackArray, event.previousIndex, event.currentIndex);
+  calculateScore(): number {
+    let score = 0;
+    const maxScore = 1000;
+    const totalTracks = this.trackArray.length;
+
+    this.trackArray.forEach((track, index) => {
+      const difference = Math.abs(track.rank - (index + 1));
+      const trackScore = Math.max(0, (totalTracks - difference) / totalTracks);
+      score += trackScore;
+    });
+    return Math.round((score / totalTracks) * maxScore)
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.trackArray, event.previousIndex, event.currentIndex);
+    this.currentOrder = this.trackArray.map(track => track.rank);
+  }
+
+  onButtonClick(): void {
+    this.score = this.calculateScore();
+    this.showScore = true
+  }
 }
 
 export class Track{
