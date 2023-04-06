@@ -1,5 +1,6 @@
 import requests
 import jmespath
+import csv
 
 class Track:
     def __init__(self, data):
@@ -54,7 +55,7 @@ class Playlist:
 
 #get access for 1h then insert token from URL to variable below.
 #https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
-myToken = "BQBJw5KiSF94UvEms6ASIDw0bXyu3Hztw4K3Izv0zG4mBM9X4cGQEuOfLA08cQ-XKRYWVGrN1ouKutpFURy7LO6o6UxI76Htgf4VYMEs-Wo5TOOGj7h_KRSX5TAVSbbhEytzYNXQ9DJkTFI5ttZ_gO4A0iC0NyYIou3jJP0I4JuGBwArltWN"
+myToken = "BQAyB5e57IBeUPmTPYl4Ls1vuQZHs77etJ_GoEvl6jQojHvRSfvESm0bWbcFwrlEiaoeIhhNsiATqA4sfGpxvAj0vga1soT-UBkbQcM1c2_4rOwhf7eVR7Ex1FSoLTlshbRhPQzx2fwzXLhvAgJj03dkgvoT7Wt-YQP1bBiiGKcZM7hLoOYu"
 
 #trackID of Freelance - Tori (tror jag)
 freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
@@ -85,15 +86,29 @@ top50worldID = "37i9dQZEVXbNG2KDcFcKOF"
 
 p1 = Playlist(getPlaylist(newmusicplaylistID, myToken))
 p1Data = p1._data
-for item in p1Data['items']:
-    # Retrieve the track name
-    track_name = item['track']['name']
-    # Retrieve the artist name
-    artist_name = item['track']['artists'][0]["name"]
-    # Retrieve the popularity of the track
-    popularity = item['track']['popularity']
-    # Print the track name and popularity
-    print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
+
+# Open the CSV file for writing
+with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    # Create a CSV writer object
+    csv_writer = csv.writer(csvfile)
+    # Write the header row
+    csv_writer.writerow(['Song', 'Artist', 'Popularity'])
+
+    for item in p1Data['items']:
+        # Retrieve the track name
+        track_name = item['track']['name']
+        # Retrieve the artist name
+        artist_name = item['track']['artists'][0]["name"]
+        # Retrieve the popularity of the track
+        popularity = item['track']['popularity']
+        # Print the track name and popularity
+        csv_writer.writerow([track_name, artist_name, popularity])
+        print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
+
+#Writing to csv file and printing
+
+
+
 
 #FILTRERA MED JMESPath:
 #     "items"[*]."track".["popularity", "name", "artists"[0]."name"]
