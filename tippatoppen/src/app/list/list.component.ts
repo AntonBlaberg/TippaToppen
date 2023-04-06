@@ -22,6 +22,8 @@ export class ListComponent implements OnInit {
               results.data.forEach((row: any) => {
                 this.trackArray.push(new Track(row.Song, row.Artist, parseInt(row.Popularity, 10)))
               })
+              // sorting
+              this.trackArray.sort((a, b) => b.popularity - a.popularity)
             }
           })
         },
@@ -31,9 +33,18 @@ export class ListComponent implements OnInit {
     );
 
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.shuffle();
+  }
   
   values = ['Value 1', 'Value 2', 'Value 3', 'Value 4', 'Value 5', 'Value 6', 'Value 7', 'Value 8', 'Value 9', 'Value 10'];
+
+  shuffle(): void {
+    for (let i = this.trackArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.trackArray[i], this.trackArray[j]] = [this.trackArray[j], this.trackArray[i]];
+    }
+  }
 
 }
 
@@ -48,3 +59,4 @@ export class Track{
     this.popularity = popularity
   }
 }
+
