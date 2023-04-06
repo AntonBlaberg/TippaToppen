@@ -12,6 +12,7 @@ export class ListComponent implements OnInit {
   showScore: boolean = false
   score: number = 0;
   currentOrder: number[] = [];
+  correctnessPercentages: number[] = [];
   public trackArray: Track[] = []
   constructor(private http: HttpClient) {
     this.http
@@ -55,7 +56,7 @@ export class ListComponent implements OnInit {
 
   calculateScore(): number {
     let score = 0;
-    const maxScore = 1000;
+    const maxScore = 100;
     const totalTracks = this.trackArray.length;
 
     this.trackArray.forEach((track, index) => {
@@ -66,6 +67,12 @@ export class ListComponent implements OnInit {
     return Math.round((score / totalTracks) * maxScore)
   }
 
+  correctnessPercentage(track: Track, index: number): number {
+    const difference = Math.abs(track.rank - (index + 1));
+    const totalTracks = this.trackArray.length;
+    return Math.round(((totalTracks - difference) / totalTracks) * 100);
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.trackArray, event.previousIndex, event.currentIndex);
     this.currentOrder = this.trackArray.map(track => track.rank);
@@ -74,7 +81,18 @@ export class ListComponent implements OnInit {
   onButtonClick(): void {
     this.score = this.calculateScore();
     this.showScore = true
+    this.correctnessPercentages = this.trackArray.map((track, index) =>
+      this.correctnessPercentage(track, index)
+    );
   }
+
+  getColor(percentage: number): string {
+    const r = Math.round(255 - (percentage * 255) / 100);
+    const g = Math.round((percentage * 255) / 100);
+    const b = 0;
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
 }
 
 export class Track{
