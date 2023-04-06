@@ -4,6 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
 import { HttpClientModule } from '@angular/common/http';
+import * as Papa from 'papaparse';
+
 
 
 @NgModule({

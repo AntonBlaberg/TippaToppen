@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
+import * as Papa from 'papaparse';
 
 @Component({
   selector: 'app-list',
@@ -14,12 +15,15 @@ export class ListComponent implements OnInit {
     .get('assets/output.csv', {responseType: 'text'})
     .subscribe(
         data => {
-            let csvToRowArray = data.split("\n");
-            for (let index = 1; index < csvToRowArray.length - 1; index++) {
-              let row = csvToRowArray[index].split(",");
-              this.trackArray.push(new Track(row[0], row[1],parseInt( row[2], 10)));
+          Papa.parse(data, {
+            header: true,
+            skipEmptyLines: true,
+            complete: (results) => {
+              results.data.forEach((row: any) => {
+                this.trackArray.push(new Track(row.Song, row.Artist, parseInt(row.Popularity, 10)))
+              })
             }
-            console.log(this.trackArray);
+          })
         },
         error => {
             console.log(error);
