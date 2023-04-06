@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
 import { HttpClientModule } from '@angular/common/http';
 import * as Papa from 'papaparse';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -16,7 +16,8 @@ import * as Papa from 'papaparse';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    DragDropModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import * as Papa from 'papaparse';
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop'
 
 @Component({
   selector: 'app-list',
@@ -48,6 +49,10 @@ export class ListComponent implements OnInit {
       const j = Math.floor(Math.random() * (i + 1));
       [this.trackArray[i], this.trackArray[j]] = [this.trackArray[j], this.trackArray[i]];
     }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.trackArray, event.previousIndex, event.currentIndex);
   }
 
 }

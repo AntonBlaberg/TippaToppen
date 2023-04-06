@@ -1,8 +1,7 @@
 <h1>Har du koll på Pop?</h1>
 
-<ul>
-    <p *ngFor="let track of trackArray">
-        <strong>{{ track.title }}</strong>  -  {{track.artist}}
-    </p>
-</ul>
 <!-- <button (click)="shuffle()">Shuffle Tracks</button> -->
+
+<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let track of trackArray" cdkDrag><strong>{{ track.title }}</strong> - {{track.artist}}</div>
+</div>
