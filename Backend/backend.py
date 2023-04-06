@@ -105,9 +105,6 @@ with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
         csv_writer.writerow([track_name, artist_name, popularity])
         print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
 
-#Writing to csv file and printing
-
-
 
 
 #FILTRERA MED JMESPath:
