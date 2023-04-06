@@ -1,8 +1,8 @@
-<p>list works!</p>
+<h1>Har du koll på Pop?</h1>
 
 <ul>
-    <li *ngFor="let track of trackArray">
-        {{ track.title }} av {{track.artist}} med {{track.popularity}}
-    </li>
+    <p *ngFor="let track of trackArray">
+        <strong>{{ track.title }}</strong>  -  {{track.artist}}
+    </p>
 </ul>
-<button (click)="shuffle()">Shuffle Tracks</button>
+<!-- <button (click)="shuffle()">Shuffle Tracks</button> -->

@@ -24,6 +24,10 @@ export class ListComponent implements OnInit {
               })
               // sorting
               this.trackArray.sort((a, b) => b.popularity - a.popularity)
+              this.trackArray.forEach((track,index) => {
+                track.rank = index + 1
+              })
+              this.shuffle()
             }
           })
         },
@@ -52,11 +56,13 @@ export class Track{
   title: String
   artist: String
   popularity: number
+  rank: number
 
   constructor(title: String, artist: String, popularity: number){
     this.title = title
     this.artist = artist
     this.popularity = popularity
+    this.rank = 0
   }
 }
 
