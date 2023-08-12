@@ -1,5 +1,6 @@
 <div class="container">
-    <h1>TippaToppen - Vad är populärast?</h1>
+    <h1>TippaToppen - Ranka Topplåtar</h1>
+    <h4>Flytta låtarna - populärast överst!</h4>
   
     <div class="wrapper">
       <div cdkDropList (cdkDropListDropped)="drop($event)">
@@ -17,6 +18,8 @@
       </div>
     </div>
   
+    <!--<h4>Clicka sedan här och få poäng (0-100)</h4>-->
+
     <button (click)="onButtonClick()">Submit</button>
     <h4 *ngIf="showScore" class="score">Score: {{ score }}</h4>
   </div>

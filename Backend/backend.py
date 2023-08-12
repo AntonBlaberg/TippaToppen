@@ -48,19 +48,6 @@ class Playlist:
         print(self._data)
         return self._data['name']
 
-
-
-
-
-
-#get access for 1h then insert token from URL to variable below.
-#https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
-myToken = "BQAyB5e57IBeUPmTPYl4Ls1vuQZHs77etJ_GoEvl6jQojHvRSfvESm0bWbcFwrlEiaoeIhhNsiATqA4sfGpxvAj0vga1soT-UBkbQcM1c2_4rOwhf7eVR7Ex1FSoLTlshbRhPQzx2fwzXLhvAgJj03dkgvoT7Wt-YQP1bBiiGKcZM7hLoOYu"
-
-#trackID of Freelance - Tori (tror jag)
-freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
-myTrackID = freelanceToriID
-
 #Get info about specific track
 def getTrack(trackID, token):
     trackURL = "https://api.spotify.com/v1/tracks/"+trackID
@@ -76,8 +63,17 @@ def getPlaylist(playlistID, token):
 
 
 
+
+#get access for 1h then insert token from URL to variable below.
+#https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
+myToken = "BQD9tFXwh673GDxr_yMG4h-ow59wd6VO_hMntN7pIw2b_b_7wKCR4kFpduqIZhQtM3B88hQswZdnNWAnoDQ0rdMR4nY77VcWgnHS2nqJ016PUpJ6zYDi1FUtR2FLtW8T7USxSjEgs6OE_AubNSDxnSIm3R9FYUw-8p5fNvqT-vCExXFhqGA"
+
+#trackID of Freelance - Tori (tror jag)
+freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
+myTrackID = freelanceToriID
+
+
 t1 = Track(getTrack(myTrackID, myToken))
-#print(t1.getName())
 
 
 #trackID of "New Music Friday Sweden"
@@ -103,9 +99,14 @@ with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
         popularity = item['track']['popularity']
         # Print the track name and popularity
         csv_writer.writerow([track_name, artist_name, popularity])
-        print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
+        #print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
 
+#with open('artistsPopularity.csv', 'w', newline='', encoding='utf-8') as csvfile:
 
+## Request for Artists and their amount of Monthly listeners
+endpoint = 'https://api.spotify.com/v1/me/top/artists'
+
+params
 
 #FILTRERA MED JMESPath:
 #     "items"[*]."track".["popularity", "name", "artists"[0]."name"]
