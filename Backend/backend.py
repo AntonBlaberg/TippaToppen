@@ -66,7 +66,7 @@ def getPlaylist(playlistID, token):
 
 #get access for 1h then insert token from URL to variable below.
 #https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
-myToken = "BQD9tFXwh673GDxr_yMG4h-ow59wd6VO_hMntN7pIw2b_b_7wKCR4kFpduqIZhQtM3B88hQswZdnNWAnoDQ0rdMR4nY77VcWgnHS2nqJ016PUpJ6zYDi1FUtR2FLtW8T7USxSjEgs6OE_AubNSDxnSIm3R9FYUw-8p5fNvqT-vCExXFhqGA"
+myToken = "BQBZR4kt3NC8PpUcqQdRuYyJGrPWCHdWPT34I72zUntZJz_f_iCNsRii7XtaBq5vUKwSoT9Ag5fK1aRRVKA6ue18qo0RxiXn9HZu6vUPZID04R9s2uSa-95Takkkcpewo-SSLKiTZbLkYqDfYx7lzRhR4-FaTj1KVzuSOev-9hFFslVPS8k"
 
 #trackID of Freelance - Tori (tror jag)
 freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
@@ -99,14 +99,36 @@ with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
         popularity = item['track']['popularity']
         # Print the track name and popularity
         csv_writer.writerow([track_name, artist_name, popularity])
-        #print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
+        print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
 
 #with open('artistsPopularity.csv', 'w', newline='', encoding='utf-8') as csvfile:
 
 ## Request for Artists and their amount of Monthly listeners
+
 endpoint = 'https://api.spotify.com/v1/me/top/artists'
 
-params
+params = {
+    'time_range': 'medium_term',  # You can use 'short_term', 'medium_term', or 'long_term'
+    'limit': 5
+}
+
+headers = {
+    "Authorization": "Bearer BQBZR4kt3NC8PpUcqQdRuYyJGrPWCHdWPT34I72zUntZJz_f_iCNsRii7XtaBq5vUKwSoT9Ag5fK1aRRVKA6ue18qo0RxiXn9HZu6vUPZID04R9s2uSa-95Takkkcpewo-SSLKiTZbLkYqDfYx7lzRhR4-FaTj1KVzuSOev-9hFFslVPS8k"
+}
+
+response = requests.get(endpoint, params=params, headers=headers)
+
+# Check if the request was successful
+if response.status_code == 200:
+    data = response.json()
+    
+    # Retrieve and print the artists and their monthly listeners
+    for artist in data['items']:
+        artist_name = artist['name']
+        monthly_listeners = artist['followers']['total']
+        print(f"Artist: {artist_name}, Monthly Listeners: {monthly_listeners}")
+else:
+    print("Error:", response.status_code, response)
 
 #FILTRERA MED JMESPath:
 #     "items"[*]."track".["popularity", "name", "artists"[0]."name"]
