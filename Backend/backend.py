@@ -66,7 +66,7 @@ def getPlaylist(playlistID, token):
 
 #get access for 1h then insert token from URL to variable below.
 #https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
-myToken = "BQBZR4kt3NC8PpUcqQdRuYyJGrPWCHdWPT34I72zUntZJz_f_iCNsRii7XtaBq5vUKwSoT9Ag5fK1aRRVKA6ue18qo0RxiXn9HZu6vUPZID04R9s2uSa-95Takkkcpewo-SSLKiTZbLkYqDfYx7lzRhR4-FaTj1KVzuSOev-9hFFslVPS8k"
+myToken = "BQB_WuG8iL0ByHGDcZK4ot7FjUBQ5UPSBP7pwgWu7dtaepVkSMtd6wMM_ljPiOUOM6ne9CJI6wP3171aAGdLQZSWUlbVCr6GBxkLwxCT_-QfLmsRf8_msQ2G0pW15jYQICe0yl6Gbi3tFIMGj3kArOEZlQ_3dQEwDpKrasgVUY-4kUr2YDM"
 
 #trackID of Freelance - Tori (tror jag)
 freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
@@ -89,17 +89,21 @@ with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
     csv_writer = csv.writer(csvfile)
     # Write the header row
     csv_writer.writerow(['Song', 'Artist', 'Popularity'])
-
     for item in p1Data['items']:
-        # Retrieve the track name
-        track_name = item['track']['name']
-        # Retrieve the artist name
-        artist_name = item['track']['artists'][0]["name"]
-        # Retrieve the popularity of the track
-        popularity = item['track']['popularity']
-        # Print the track name and popularity
-        csv_writer.writerow([track_name, artist_name, popularity])
-        print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
+        try:
+            # Retrieve the track name
+            track_name = item['track']['name']
+            # Retrieve the artist name
+            artist_name = item['track']['artists'][0]["name"]
+            # Retrieve the popularity of the track
+            popularity = item['track']['popularity']
+            # Print the track name and popularity
+            csv_writer.writerow([track_name, artist_name, popularity])
+            print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
+        except Exception as error:
+            print(f"crashed at item: {item} \nERROR: ", error)
+
+        
 
 #with open('artistsPopularity.csv', 'w', newline='', encoding='utf-8') as csvfile:
 

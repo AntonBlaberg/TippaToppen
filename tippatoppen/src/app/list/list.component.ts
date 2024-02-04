@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
   public trackArray: Track[] = []
   constructor(private http: HttpClient) {
     this.http
-    .get('assets/output.csv', {responseType: 'text'})
+    .get('assets/output_January.csv', {responseType: 'text'})
     .subscribe(
         data => {
           Papa.parse(data, {
