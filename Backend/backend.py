@@ -48,19 +48,6 @@ class Playlist:
         print(self._data)
         return self._data['name']
 
-
-
-
-
-
-#get access for 1h then insert token from URL to variable below.
-#https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
-myToken = "BQAyB5e57IBeUPmTPYl4Ls1vuQZHs77etJ_GoEvl6jQojHvRSfvESm0bWbcFwrlEiaoeIhhNsiATqA4sfGpxvAj0vga1soT-UBkbQcM1c2_4rOwhf7eVR7Ex1FSoLTlshbRhPQzx2fwzXLhvAgJj03dkgvoT7Wt-YQP1bBiiGKcZM7hLoOYu"
-
-#trackID of Freelance - Tori (tror jag)
-freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
-myTrackID = freelanceToriID
-
 #Get info about specific track
 def getTrack(trackID, token):
     trackURL = "https://api.spotify.com/v1/tracks/"+trackID
@@ -76,8 +63,17 @@ def getPlaylist(playlistID, token):
 
 
 
+
+#get access for 1h then insert token from URL to variable below.
+#https://accounts.spotify.com/authorize?client_id=05973542c38b4e34b1faf371c822a78e&response_type=token&redirect_uri=https%3A%2F%2Fexample.com%2Fcallback
+myToken = "BQB_WuG8iL0ByHGDcZK4ot7FjUBQ5UPSBP7pwgWu7dtaepVkSMtd6wMM_ljPiOUOM6ne9CJI6wP3171aAGdLQZSWUlbVCr6GBxkLwxCT_-QfLmsRf8_msQ2G0pW15jYQICe0yl6Gbi3tFIMGj3kArOEZlQ_3dQEwDpKrasgVUY-4kUr2YDM"
+
+#trackID of Freelance - Tori (tror jag)
+freelanceToriID = "1zJa06KxSnlyYCoDnUgNp4"
+myTrackID = freelanceToriID
+
+
 t1 = Track(getTrack(myTrackID, myToken))
-#print(t1.getName())
 
 
 #trackID of "New Music Friday Sweden"
@@ -93,19 +89,50 @@ with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
     csv_writer = csv.writer(csvfile)
     # Write the header row
     csv_writer.writerow(['Song', 'Artist', 'Popularity'])
-
     for item in p1Data['items']:
-        # Retrieve the track name
-        track_name = item['track']['name']
-        # Retrieve the artist name
-        artist_name = item['track']['artists'][0]["name"]
-        # Retrieve the popularity of the track
-        popularity = item['track']['popularity']
-        # Print the track name and popularity
-        csv_writer.writerow([track_name, artist_name, popularity])
-        print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
+        try:
+            # Retrieve the track name
+            track_name = item['track']['name']
+            # Retrieve the artist name
+            artist_name = item['track']['artists'][0]["name"]
+            # Retrieve the popularity of the track
+            popularity = item['track']['popularity']
+            # Print the track name and popularity
+            csv_writer.writerow([track_name, artist_name, popularity])
+            print(f"Song: {track_name} - {artist_name}, Popularity: {popularity}")
+        except Exception as error:
+            print(f"crashed at item: {item} \nERROR: ", error)
 
+        
 
+#with open('artistsPopularity.csv', 'w', newline='', encoding='utf-8') as csvfile:
+
+## Request for Artists and their amount of Monthly listeners
+
+endpoint = 'https://api.spotify.com/v1/me/top/artists'
+
+params = {
+    'time_range': 'medium_term',  # You can use 'short_term', 'medium_term', or 'long_term'
+    'limit': 5
+}
+
+headers = {
+    "Authorization": "Bearer BQBZR4kt3NC8PpUcqQdRuYyJGrPWCHdWPT34I72zUntZJz_f_iCNsRii7XtaBq5vUKwSoT9Ag5fK1aRRVKA6ue18qo0RxiXn9HZu6vUPZID04R9s2uSa-95Takkkcpewo-SSLKiTZbLkYqDfYx7lzRhR4-FaTj1KVzuSOev-9hFFslVPS8k"
+}
+
+response = requests.get(endpoint, params=params, headers=headers)
+
+# Check if the request was successful
+if response.status_code == 200:
+    data = response.json()
+    
+    # Retrieve and print the artists and their monthly listeners
+    for artist in data['items']:
+        artist_name = artist['name']
+        monthly_listeners = artist['followers']['total']
+        print(f"Artist: {artist_name}, Monthly Listeners: {monthly_listeners}")
+else:
+    print("Error:", response.status_code, response)
 
 #FILTRERA MED JMESPath:
 #     "items"[*]."track".["popularity", "name", "artists"[0]."name"]

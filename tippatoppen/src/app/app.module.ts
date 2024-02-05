@@ -5,12 +5,18 @@ import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { HeaderComponent } from './header/header.component';
+import { RankTopSongsComponent } from './rank-top-songs/rank-top-songs.component';
+import { PredictArtistsComponent } from './predict-artists/predict-artists.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListComponent
+    ListComponent,
+    HeaderComponent,
+    RankTopSongsComponent,
+    PredictArtistsComponent
   ],
   imports: [
     BrowserModule,

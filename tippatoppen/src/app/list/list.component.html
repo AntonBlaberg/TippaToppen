@@ -1,18 +1,26 @@
-<h1>TippaToppen - Vad är populärast?</h1>
-
-<!-- <button (click)="shuffle()">Shuffle Tracks</button> -->
-
-<div cdkDropList (cdkDropListDropped)="drop($event)">
-    <div
-      *ngFor="let track of trackArray; let i = index"
-      cdkDrag
-      [style.backgroundColor]="showScore ? getColor(correctnessPercentages[i]) : ''"
-    >
-      <strong>{{ track.title }}</strong> by {{track.artist}})
-      <span *ngIf="showScore">  - {{track.rank}}</span>
-      <span class="rewardEmoji" *ngIf="showScore && correctnessPercentages[i] === 100">⭐</span>
+<div class="container">
+    <h1>TippaToppen - Ranka Topplåtar</h1>
+    <h4>Flytta låtarna - populärast överst!</h4>
+  
+    <div class="wrapper">
+      <div cdkDropList (cdkDropListDropped)="drop($event)">
+        <div
+          *ngFor="let track of trackArray; let i = index"
+          cdkDrag
+          [style.backgroundColor]="showScore ? getColor(correctnessPercentages[i]) : ''"
+          class="track"
+        >
+          <span class="rank" *ngIf="showScore">{{ track.rank }}.</span>
+          <span class="title">{{ track.title }}</span>
+          <span class="artist">{{ track.artist }}</span>
+          <span class="reward" *ngIf="showScore && correctnessPercentages[i] === 100">⭐</span>
+        </div>
+      </div>
     </div>
-  </div>
+  
+    <!--<h4>Clicka sedan här och få poäng (0-100)</h4>-->
 
-<button (click)="onButtonClick()">Submit</button>
-<h4 *ngIf="showScore"> Score: {{score}}</h4>
+    <button (click)="onButtonClick()">Submit</button>
+    <!-- <button (click)="fetchTracks()">Fetch tracks</button> -->
+    <h4 *ngIf="showScore" class="score">Score: {{ score }}</h4>
+  </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import * as Papa from 'papaparse';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop'
+//import { exec } from 'child_process'
 
 @Component({
   selector: 'app-list',
@@ -16,7 +17,7 @@ export class ListComponent implements OnInit {
   public trackArray: Track[] = []
   constructor(private http: HttpClient) {
     this.http
-    .get('assets/output.csv', {responseType: 'text'})
+    .get('assets/output_January.csv', {responseType: 'text'})
     .subscribe(
         data => {
           Papa.parse(data, {
@@ -92,6 +93,20 @@ export class ListComponent implements OnInit {
     const b = 0;
     return `rgb(${r}, ${g}, ${b})`;
   }
+
+/*   fetchTracks(): void {
+    const pythonScriptPath = '../../../Backend/Backend.py';
+    const pythonArguments = [''];
+    const command = `python ${pythonScriptPath} ${pythonArguments.join(' ')}`;
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        return;
+      }
+      console.log(`Python script output:\n${stdout}`);
+      console.error(`Python script errors:\n${stderr}`);
+    });
+  } */
 
 }
 
